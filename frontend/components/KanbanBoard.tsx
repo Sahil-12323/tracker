@@ -68,7 +68,7 @@ export function KanbanBoard({ applications, onStatusChange, onOpenAdd, onOpenAut
 
 function MenuAction({ label, icon, onPress, testID }: { label: string; icon: keyof typeof Ionicons.glyphMap; onPress: () => void; testID: string }) {
   return (
-    <Pressable onPress={onPress} onPressIn={onPress} style={styles.menuAction} testID={testID} {...webTest(testID)}>
+    <Pressable onPress={onPress} style={styles.menuAction} testID={testID} {...webTest(testID)}>
       <Text style={styles.menuText}>{label}</Text>
       <Ionicons name={icon} size={21} color="#0A84FF" />
     </Pressable>

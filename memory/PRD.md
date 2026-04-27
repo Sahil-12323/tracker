@@ -40,6 +40,12 @@ Build a production-ready iOS and Android mobile app plus backend named **JobTrac
 - Fixed Smart Detection popup layout so Add/Edit/Ignore actions remain visible and tappable on 390x844 mobile viewport.
 - Added frontend API base fallback support for both `EXPO_PUBLIC_BACKEND_URL` and `EXPO_BACKEND_URL`.
 
+## Implemented — 2026-04-27 UI Reference Update
+- Matched uploaded mobile UI reference with a dark pipeline dashboard: horizontal status summary cards, glowing add button, add-action popover, vertical application list rows, status pill, move chips, and AI auto-import card.
+- Added stronger onboarding floating text effects: large ambient background labels plus word-by-word animated headline reveal/breathing motion.
+- Converted the add menu to a modal overlay so action taps do not pass through to underlying cards.
+- Verified public-preview QA: onboarding, auth transition, pipeline dashboard, add menu, manual save, application row rendering, detection navigation, and backend regressions all passed.
+
 ## Current Known Constraints
 - Public Expo preview is currently unavailable due supervisor/ngrok tunnel startup failures; local UI and backend tests pass.
 - Gmail sync requires real `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `/app/backend/.env`.
