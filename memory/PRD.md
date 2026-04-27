@@ -32,10 +32,18 @@ Build a production-ready iOS and Android mobile app plus backend named **JobTrac
 - Backend regression tests pass: `8 passed` via `/app/backend/tests/test_jobtrackr_api.py`.
 - Local mobile web E2E passed for signup, add application, Kanban rendering, and detection popup using a local API proxy.
 
+## Implemented — 2026-04-27 Update
+- Added Gmail OAuth credentials to backend config; `/api/gmail/config` now reports Gmail OAuth as configured and returns the callback URI.
+- Added Grok key to backend config and hardened parsing fallback behavior. Current xAI response rejects the provided key as incorrect, so Grok calls fall back safely to the rule parser.
+- Redesigned app as dark-first premium UI with glowing blue primary buttons, dark glass cards, dark sheets/modals, and dark analytics/profile screens.
+- Added 3-slide animated onboarding carousel with base64 artwork, floating icon/heading effects, feature explanations, dots, and entry CTA.
+- Fixed Smart Detection popup layout so Add/Edit/Ignore actions remain visible and tappable on 390x844 mobile viewport.
+- Added frontend API base fallback support for both `EXPO_PUBLIC_BACKEND_URL` and `EXPO_BACKEND_URL`.
+
 ## Current Known Constraints
 - Public Expo preview is currently unavailable due supervisor/ngrok tunnel startup failures; local UI and backend tests pass.
 - Gmail sync requires real `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `/app/backend/.env`.
-- Grok extraction requires real `GROK_API_KEY`; without it, the app uses a privacy-safe rule parser and clearly reports that state.
+- Grok extraction requires a valid `GROK_API_KEY`; the currently supplied key is rejected by xAI, so the app uses a privacy-safe rule parser and clearly reports that state.
 - Full native iOS share extension support may require a native extension; Android share intent and deep link capture are configured.
 
 ## Prioritized Backlog

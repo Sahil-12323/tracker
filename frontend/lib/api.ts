@@ -3,7 +3,13 @@ import Constants from 'expo-constants';
 import { Analytics, Application, ApplicationDraft, Detection, User } from '../types';
 
 const expoExtra = (Constants.expoConfig?.extra || {}) as Record<string, string>;
-const API_BASE = (expoExtra.EXPO_PUBLIC_BACKEND_URL || process.env.EXPO_PUBLIC_BACKEND_URL || '').replace(/\/$/, '');
+const API_BASE = (
+  expoExtra.EXPO_PUBLIC_BACKEND_URL ||
+  expoExtra.EXPO_BACKEND_URL ||
+  process.env.EXPO_PUBLIC_BACKEND_URL ||
+  process.env.EXPO_BACKEND_URL ||
+  ''
+).replace(/\/$/, '');
 const TOKEN_KEY = 'jobtrackr_token';
 
 async function getToken() {
