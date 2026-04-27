@@ -1,0 +1,64 @@
+{
+  "summary": "Executed backend regression and mobile-first UI/integration tests on public preview URL. Verified onboarding->signup auth, Smart Detection parse/accept flow, Analytics and Profile reference sections, and mobile overflow/CTA reachability at 390x844.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [
+      {
+        "flow": "Detection AI parsing provider",
+        "issue": "xAI Grok API key is rejected (HTTP 400 invalid key) in backend logs; detection still works through fallback parser and renders inline preview.",
+        "affected_testIDs": [
+          "parse-detection-button",
+          "smart-detection-edit",
+          "smart-detection-accept"
+        ]
+      },
+      {
+        "flow": "Expo web preview stability",
+        "issue": "Intermittent Metro/tunnel instability observed (console 'Disconnected from Metro (1006)' and ngrok restart errors in supervisor logs), though UI flow recovered and tests completed.",
+        "affected_testIDs": [
+          "onboarding-next-slide-button",
+          "tab-home"
+        ]
+      }
+    ],
+    "design_issues": [],
+    "react_native_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_jobtrackr_api.py",
+    "/app/test_reports/pytest/pytest_results.xml",
+    "/app/test_reports/browser_iteration_4_baseline/frontend_load_mobile.jpeg",
+    "/app/test_reports/browser_iteration_4/home_after_auth.jpeg",
+    "/app/test_reports/browser_iteration_4/analytics_screen.jpeg",
+    "/app/test_reports/browser_iteration_4/profile_screen.jpeg",
+    "/app/test_reports/browser_iteration_4b/detection_after_parse.jpeg",
+    "/app/test_reports/browser_iteration_4b/analytics_scrolled.jpeg",
+    "/app/test_reports/browser_iteration_4b/profile_scrolled.jpeg"
+  ],
+  "action_items": [
+    "Replace/repair GROK_API_KEY to re-enable primary AI parsing path (fallback currently masks key issue).",
+    "Investigate Expo tunnel/Metro disconnect flakiness in supervisor/ngrok path to reduce intermittent preview instability.",
+    "Wire Profile edit control to an actual action and add testID to keep it testable and non-deceptive."
+  ],
+  "critical_code_review_comments": [
+    "frontend/components/ProfileScreen.tsx: 'Edit' is rendered as Pressable without onPress/testID, creating a dead interactive control.",
+    "frontend/components/AnalyticsScreen.tsx: progress fill enforces minimum 8% for zero-count stages, which can visually misrepresent pipeline distribution.",
+    "frontend/components/DetectionScreen.tsx: accept()/ignore() API calls have no local try/catch; API failures can surface as unhandled interaction errors without user feedback."
+  ],
+  "updated_files": [
+    "/app/test_reports/iteration_4.json"
+  ],
+  "success_rate": {
+    "backend": "100%",
+    "frontend": "97%"
+  },
+  "seed_data_creation": "Created unique TEST users via signup and created detection/application records during UI/API validation.",
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Public preview URL is functional. Required Smart Detection, Analytics, and Profile reference sections are present and pass at 390x844 with no horizontal overflow; scroll is needed to validate lower footer/reminder rows.",
+  "rca_of_issue": "Primary unresolved integration issue is external-key failure: backend logs show xAI returning HTTP 400 invalid API key, causing deterministic fallback parser usage. Reproduction: sign in -> Detection tab -> Analyze application. Mitigation: rotate/fix GROK_API_KEY and retest parse config_message + ai_available behavior."
+}
