@@ -22,7 +22,7 @@ export function AddApplicationSheet({ visible, initial, onClose, onSave }: { vis
             <Field label="Company Name" value={draft.company_name} onChangeText={(v) => update('company_name', v)} testID="company-input" />
             <Field label="Role" value={draft.role} onChangeText={(v) => update('role', v)} testID="role-input" />
             <Text style={styles.label}>Status</Text>
-            <View style={styles.chips}>{STATUSES.map((s) => <Pressable key={s} onPress={() => update('status', s)} style={[styles.chip, draft.status === s && styles.chipActive]} {...webTest(`status-chip-${s}`)}><Text style={[styles.chipText, draft.status === s && styles.chipTextActive]}>{s}</Text></Pressable>)}</View>
+            <View style={styles.chips}>{STATUSES.map((s) => <Pressable key={s} testID={`status-chip-${s}`} onPress={() => update('status', s)} style={[styles.chip, draft.status === s && styles.chipActive]} {...webTest(`status-chip-${s}`)}><Text style={[styles.chipText, draft.status === s && styles.chipTextActive]}>{s}</Text></Pressable>)}</View>
             <Field label="Applied Date" value={draft.applied_date} onChangeText={(v) => update('applied_date', v)} testID="applied-date-input" />
             <Field label="Job Link" value={draft.job_link || ''} onChangeText={(v) => update('job_link', v)} testID="job-link-input" />
             <Field label="Resume Version" value={draft.resume_version || ''} onChangeText={(v) => update('resume_version', v)} testID="resume-input" />
@@ -31,7 +31,7 @@ export function AddApplicationSheet({ visible, initial, onClose, onSave }: { vis
             <TextInput testID="notes-input" multiline value={draft.notes || ''} onChangeText={(v) => update('notes', v)} placeholder="Recruiter details, next steps, salary range..." placeholderTextColor="#A1A1AA" style={[styles.input, styles.notes]} {...webTest('notes-input')} />
           </ScrollView>
           <View style={styles.actions}>
-            <Pressable onPress={onClose} style={styles.secondary} {...webTest('cancel-application-button')}><Text style={styles.secondaryText}>Cancel</Text></Pressable>
+            <Pressable testID="cancel-application-button" onPress={onClose} style={styles.secondary} {...webTest('cancel-application-button')}><Text style={styles.secondaryText}>Cancel</Text></Pressable>
             <Pressable disabled={!canSave} onPress={() => onSave(draft)} style={[styles.primary, !canSave && styles.disabled]} testID="save-application-button" {...webTest('save-application-button')}><Text style={styles.primaryText}>Save</Text></Pressable>
           </View>
         </View>

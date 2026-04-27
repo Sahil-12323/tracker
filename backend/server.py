@@ -32,7 +32,9 @@ load_dotenv(ROOT_DIR / '.env')
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
-JWT_SECRET = os.getenv("JWT_SECRET", "change-me")
+JWT_SECRET = os.getenv("JWT_SECRET")
+if not JWT_SECRET:
+    raise RuntimeError("JWT_SECRET must be configured")
 JWT_ALGORITHM = "HS256"
 TOKEN_DAYS = 7
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

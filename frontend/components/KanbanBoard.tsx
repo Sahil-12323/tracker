@@ -43,7 +43,7 @@ function JobCard({ app, active, onLongPress, onStatusChange }: { app: Applicatio
       <Text style={styles.role}>{app.role}</Text><Text style={styles.date}>Applied {app.applied_date}</Text>
       {!!app.resume_version && <Text style={styles.resume}>Resume: {app.resume_version}</Text>}
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.moveRow}>
-        {STATUSES.filter((s) => s !== app.status).map((s) => <Pressable key={s} onPress={() => onStatusChange(app.id, s)} style={styles.movePill} {...webTest(`move-${app.id}-${s}`)}><Text style={styles.moveText}>{s}</Text></Pressable>)}
+        {STATUSES.filter((s) => s !== app.status).map((s) => <Pressable key={s} testID={`move-${app.id}-${s}`} onPress={() => onStatusChange(app.id, s)} style={styles.movePill} {...webTest(`move-${app.id}-${s}`)}><Text style={styles.moveText}>{s}</Text></Pressable>)}
       </ScrollView>
     </Pressable>
   );

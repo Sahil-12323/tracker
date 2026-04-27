@@ -1,0 +1,61 @@
+# JobTrackr AI PRD
+
+## Problem Statement
+Build a production-ready iOS and Android mobile app plus backend named **JobTrackr AI** that reduces manual job tracking by detecting applications from Gmail, mobile share text, and screenshots/OCR, then organizing them in a polished Kanban workflow.
+
+## Architecture
+- **Mobile frontend:** Expo SDK 54, React Native, Expo Router entry, reusable mobile components, local notifications, image picker, AsyncStorage token persistence.
+- **Backend:** FastAPI, MongoDB via Motor, JWT bearer auth, Pydantic response models, Gmail OAuth hooks, Grok-compatible parsing endpoint with secure server-side key usage.
+- **Database:** MongoDB collections for users, applications, detections, Gmail tokens, OAuth states, and user sessions. Custom UUID-style IDs are exposed; Mongo `_id` is excluded from API responses.
+- **Integrations:** Email/password auth implemented. Emergent Google session exchange endpoint implemented. Gmail OAuth and Grok parsing are config-gated until real credentials are added.
+
+## User Personas
+- **Active job seeker:** Tracks many applications and needs a clear pipeline with reminders.
+- **Career switcher:** Uses multiple resume versions and wants analytics on what works.
+- **Privacy-conscious professional:** Wants detection from allowed sources only, with confirmation before saving.
+
+## Core Requirements
+- Authentication: email/password and Google social login.
+- Kanban board: Applied, Screening, Interview, Offer, Rejected.
+- Application form: company, role, job link, status, applied date, notes, resume version, follow-up date.
+- Smart detection: confirm Add/Edit/Ignore from email/share/screenshot parsing.
+- Gmail OAuth: connect, fetch matching emails, parse application confirmations.
+- Screenshot flow: select screenshot, capture OCR text/pasted text, parse with AI/fallback.
+- Reminders: schedule local follow-up notifications.
+- Analytics: status totals, offer success rate, resume version usage, upcoming follow-ups.
+
+## Implemented — 2026-04-27
+- Built FastAPI + MongoDB backend with secure auth, application CRUD, status moves, analytics, reminders, detections, Gmail config/connect/sync endpoints, and Grok-compatible parsing with rule fallback when no key exists.
+- Built premium mobile UI: auth screen, Kanban board, add application bottom sheet, smart detection screen/bottom sheet, analytics dashboard, and profile/Gmail settings.
+- Added Expo permissions for screenshots and notifications, Android share/deep-link intent filters, and base64 in-app SVG visual assets.
+- Added `/app/auth_testing.md` and maintained `/app/memory/test_credentials.md` for test handoff.
+- Backend regression tests pass: `8 passed` via `/app/backend/tests/test_jobtrackr_api.py`.
+- Local mobile web E2E passed for signup, add application, Kanban rendering, and detection popup using a local API proxy.
+
+## Current Known Constraints
+- Public Expo preview is currently unavailable due supervisor/ngrok tunnel startup failures; local UI and backend tests pass.
+- Gmail sync requires real `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `/app/backend/.env`.
+- Grok extraction requires real `GROK_API_KEY`; without it, the app uses a privacy-safe rule parser and clearly reports that state.
+- Full native iOS share extension support may require a native extension; Android share intent and deep link capture are configured.
+
+## Prioritized Backlog
+### P0
+- Restore public Expo preview tunnel availability and rerun full public UI E2E.
+- Add real Gmail OAuth credentials and validate the end-to-end Gmail detection flow.
+- Add real Grok key and validate JSON extraction quality for messy emails and OCR text.
+
+### P1
+- Add edit/delete UI for existing application cards.
+- Improve drag-and-drop gestures with a dedicated native drag interaction.
+- Add secure token encryption with SecureStore for native builds.
+- Add push notification token registration for server-triggered reminders.
+
+### P2
+- Add advanced analytics trends over time.
+- Add resume-version recommendations based on interview/offer rates.
+- Add Chrome extension as a future companion capture source.
+
+## Next Tasks
+1. Provide Gmail OAuth credentials and add the reported redirect URI to Google Cloud Console.
+2. Provide Grok API key to enable AI parsing beyond fallback extraction.
+3. Re-run public preview UI tests once the Expo tunnel is reachable.
