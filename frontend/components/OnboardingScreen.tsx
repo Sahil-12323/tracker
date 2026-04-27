@@ -12,6 +12,26 @@ const slides = [
   { image: IMAGES.onboarding3, eyebrow: 'CAREER SIGNALS', title: 'See what resumes and stages are working fastest.', body: 'Analytics, reminders, and resume versions help you follow up at the right moment.', icon: 'analytics-outline' },
 ] as const;
 
+function FloatingWord({ word, index }: { word: string; index: number }) {
+  const rise = useSharedValue(0);
+  const breathe = useSharedValue(0);
+
+  useEffect(() => {
+    rise.value = withDelay(index * 58, withTiming(1, { duration: 560 }));
+    breathe.value = withDelay(index * 90, withRepeat(withSequence(withTiming(1, { duration: 1800 }), withTiming(0, { duration: 1800 })), -1, true));
+  }, [breathe, index, rise]);
+
+  const style = useAnimatedStyle(() => ({
+    opacity: rise.value,
+    transform: [
+      { translateY: 18 - rise.value * 18 + (breathe.value - 0.5) * 8 },
+      { scale: 0.96 + rise.value * 0.04 },
+    ],
+  }));
+
+  return <Animated.Text style={[styles.word, style]}>{word}</Animated.Text>;
+}
+
 export function OnboardingScreen({ onFinish }: { onFinish: () => void }) {
   const { width } = useWindowDimensions();
   const [index, setIndex] = useState(0);
@@ -45,12 +65,14 @@ export function OnboardingScreen({ onFinish }: { onFinish: () => void }) {
           <View key={slide.title} style={[styles.slide, { width }]}>
             <Image source={{ uri: slide.image }} style={StyleSheet.absoluteFillObject} resizeMode="cover" />
             <View style={styles.overlay} />
+            <Animated.Text style={[styles.floatingLabel, i === index && floatingStyle]}>JOBTRACKR AI</Animated.Text>
+            <Animated.Text style={[styles.floatingLabelTwo, i === index && floatingStyle]}>{slide.eyebrow}</Animated.Text>
             <Animated.View style={[styles.orb, i === index && floatingStyle]}>
               <Ionicons name={slide.icon} size={34} color="#FFFFFF" />
             </Animated.View>
             <Animated.View style={[styles.copy, i === index && titleStyle]}>
               <Text style={styles.eyebrow}>{slide.eyebrow}</Text>
-              <Text style={styles.title}>{slide.title}</Text>
+              <View style={styles.wordWrap}>{slide.title.split(' ').map((word, wordIndex) => <FloatingWord key={`${word}-${wordIndex}-${i}`} word={word} index={wordIndex} />)}</View>
               <Text style={styles.body}>{slide.body}</Text>
             </Animated.View>
           </View>
@@ -71,10 +93,13 @@ const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: '#050505' },
   slide: { flex: 1, justifyContent: 'flex-end', paddingHorizontal: 24, paddingBottom: 170 },
   overlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,.46)' },
+  floatingLabel: { position: 'absolute', top: 160, left: 24, color: 'rgba(255,255,255,.06)', fontSize: 54, fontWeight: '900', letterSpacing: -2, transform: [{ rotate: '-6deg' }] },
+  floatingLabelTwo: { position: 'absolute', top: 292, right: 18, color: 'rgba(245,166,35,.13)', fontSize: 28, fontWeight: '900', letterSpacing: 4, transform: [{ rotate: '7deg' }] },
   orb: { position: 'absolute', top: 96, right: 28, width: 86, height: 86, borderRadius: 30, backgroundColor: 'rgba(0,122,255,.3)', borderWidth: 1, borderColor: 'rgba(255,255,255,.18)', alignItems: 'center', justifyContent: 'center', shadowColor: '#007AFF', shadowOpacity: .8, shadowRadius: 28 },
   copy: { gap: 16 },
   eyebrow: { color: '#F5A623', fontSize: 13, fontWeight: '900', letterSpacing: 2.4 },
-  title: { color: '#FFFFFF', fontSize: 38, lineHeight: 43, fontWeight: '900', letterSpacing: -1.3 },
+  wordWrap: { flexDirection: 'row', flexWrap: 'wrap', columnGap: 8, rowGap: 1 },
+  word: { color: '#FFFFFF', fontSize: 38, lineHeight: 43, fontWeight: '900', letterSpacing: -1.3, textShadowColor: 'rgba(0,122,255,.24)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 12 },
   body: { color: '#D4D4D8', fontSize: 17, lineHeight: 26, fontWeight: '600' },
   footer: { position: 'absolute', left: 20, right: 20, bottom: 30, gap: 18 },
   dots: { flexDirection: 'row', gap: 8 },

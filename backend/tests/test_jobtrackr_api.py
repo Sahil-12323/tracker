@@ -2,18 +2,38 @@
 
 import os
 import uuid
+from pathlib import Path
 
 import pytest
 import requests
 
 
-BASE_URL = os.environ.get("EXPO_PUBLIC_BACKEND_URL")
+def _url_from_frontend_env() -> str:
+    env_path = Path("/app/frontend/.env")
+    if not env_path.exists():
+        return ""
+    for line in env_path.read_text().splitlines():
+        raw = line.strip()
+        if not raw or raw.startswith("#") or "=" not in raw:
+            continue
+        key, value = raw.split("=", 1)
+        if key.strip() in {"EXPO_BACKEND_URL", "EXPO_PUBLIC_BACKEND_URL"}:
+            return value.strip().strip('"').strip("'")
+    return ""
+
+
+BASE_URL = (
+    os.environ.get("EXPO_BACKEND_URL")
+    or os.environ.get("EXPO_PUBLIC_BACKEND_URL")
+    or _url_from_frontend_env()
+    or ""
+).rstrip("/")
 
 
 @pytest.fixture(scope="session")
 def api_client():
     if not BASE_URL:
-        pytest.skip("EXPO_PUBLIC_BACKEND_URL is not set")
+        pytest.skip("EXPO_BACKEND_URL/EXPO_PUBLIC_BACKEND_URL is not set")
     session = requests.Session()
     session.headers.update({"Content-Type": "application/json"})
     return session
