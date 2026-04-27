@@ -290,7 +290,6 @@ async def grok_extract(text: str, source: str) -> Dict[str, Any]:
             {"role": "user", "content": prompt},
         ],
         "temperature": 0,
-        "response_format": {"type": "json_object"},
     }
     headers = {"Authorization": f"Bearer {os.getenv('GROK_API_KEY')}", "Content-Type": "application/json"}
     try:
@@ -301,7 +300,9 @@ async def grok_extract(text: str, source: str) -> Dict[str, Any]:
             json=payload,
             timeout=25,
         )
-        response.raise_for_status()
+        if response.status_code >= 400:
+            logging.warning("Grok parse failed with status %s: %s", response.status_code, response.text[:260])
+            response.raise_for_status()
         content = response.json()["choices"][0]["message"]["content"]
         parsed = json.loads(content)
         parsed["status"] = validate_status(parsed.get("status", "Applied"))

@@ -46,11 +46,11 @@ function Field({ label, testID, ...props }: { label: string; value: string; onCh
 
 const styles = StyleSheet.create({
   overlay: { flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,.45)' },
-  sheet: { maxHeight: '92%', minHeight: '58%', backgroundColor: '#FFFFFF', borderTopLeftRadius: 28, borderTopRightRadius: 28, padding: 20 },
-  handle: { width: 48, height: 5, borderRadius: 99, backgroundColor: '#D4D4D8', alignSelf: 'center', marginBottom: 18 }, title: { fontSize: 26, fontWeight: '800', color: '#09090B', marginBottom: 16 },
-  form: { paddingBottom: 20, gap: 8 }, label: { color: '#71717A', fontSize: 13, fontWeight: '800', textTransform: 'uppercase', letterSpacing: .4, marginTop: 8 },
-  input: { borderWidth: 1, borderColor: '#E4E4E7', backgroundColor: '#F4F4F5', borderRadius: 12, padding: 15, fontSize: 16, color: '#09090B' }, notes: { minHeight: 96, textAlignVertical: 'top' },
-  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 }, chip: { borderWidth: 1, borderColor: '#E4E4E7', borderRadius: 999, paddingVertical: 10, paddingHorizontal: 14 }, chipActive: { backgroundColor: '#0033CC', borderColor: '#0033CC' }, chipText: { color: '#71717A', fontWeight: '800' }, chipTextActive: { color: '#FAFAFA' },
-  actions: { flexDirection: 'row', gap: 12, paddingTop: 12 }, secondary: { flex: 1, minHeight: 52, borderRadius: 14, borderWidth: 1, borderColor: '#E4E4E7', alignItems: 'center', justifyContent: 'center' }, secondaryText: { fontWeight: '800', color: '#09090B' },
-  primary: { flex: 1, minHeight: 52, borderRadius: 14, backgroundColor: '#0033CC', alignItems: 'center', justifyContent: 'center' }, primaryText: { color: '#FAFAFA', fontWeight: '900' }, disabled: { opacity: .45 },
+  sheet: { maxHeight: '92%', minHeight: '58%', backgroundColor: '#111111', borderTopLeftRadius: 28, borderTopRightRadius: 28, padding: 20, borderWidth: 1, borderColor: '#27272A' },
+  handle: { width: 48, height: 5, borderRadius: 99, backgroundColor: '#3F3F46', alignSelf: 'center', marginBottom: 18 }, title: { fontSize: 26, fontWeight: '900', color: '#FFFFFF', marginBottom: 16 },
+  form: { paddingBottom: 20, gap: 8 }, label: { color: '#A1A1AA', fontSize: 13, fontWeight: '900', textTransform: 'uppercase', letterSpacing: .8, marginTop: 8 },
+  input: { borderWidth: 1, borderColor: '#27272A', backgroundColor: '#050505', borderRadius: 14, padding: 15, fontSize: 16, color: '#FFFFFF' }, notes: { minHeight: 96, textAlignVertical: 'top' },
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 }, chip: { borderWidth: 1, borderColor: '#27272A', borderRadius: 999, paddingVertical: 10, paddingHorizontal: 14, backgroundColor: 'rgba(255,255,255,.04)' }, chipActive: { backgroundColor: '#007AFF', borderColor: '#3395FF', shadowColor: '#007AFF', shadowOpacity: .45, shadowRadius: 12 }, chipText: { color: '#A1A1AA', fontWeight: '800' }, chipTextActive: { color: '#FFFFFF' },
+  actions: { flexDirection: 'row', gap: 12, paddingTop: 12 }, secondary: { flex: 1, minHeight: 52, borderRadius: 14, borderWidth: 1, borderColor: '#27272A', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,255,255,.04)' }, secondaryText: { fontWeight: '900', color: '#FFFFFF' },
+  primary: { flex: 1, minHeight: 52, borderRadius: 14, backgroundColor: '#007AFF', alignItems: 'center', justifyContent: 'center', shadowColor: '#007AFF', shadowOpacity: .55, shadowRadius: 18 }, primaryText: { color: '#FFFFFF', fontWeight: '900' }, disabled: { opacity: .45 },
 });

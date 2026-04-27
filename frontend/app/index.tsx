@@ -1,13 +1,15 @@
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Platform, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { AddApplicationSheet } from '../components/AddApplicationSheet';
 import { AnalyticsScreen } from '../components/AnalyticsScreen';
 import { AuthScreen } from '../components/AuthScreen';
 import { DetectionScreen } from '../components/DetectionScreen';
 import { KanbanBoard } from '../components/KanbanBoard';
+import { OnboardingScreen } from '../components/OnboardingScreen';
 import { ProfileScreen } from '../components/ProfileScreen';
 import { appApi, authApi, saveToken } from '../lib/api';
 import { Analytics, Application, ApplicationDraft, Status, User } from '../types';
@@ -20,10 +22,12 @@ const tabs = [
   { key: 'profile', label: 'Profile', icon: 'person-outline' },
 ] as const;
 const webTest = (id: string) => (Platform.OS === 'web' ? ({ 'data-testid': id } as any) : {});
+const ONBOARDING_KEY = 'jobtrackr_onboarding_seen';
 
 export default function Index() {
   const [user, setUser] = useState<User | null>(null);
   const [checking, setChecking] = useState(true);
+  const [onboardingSeen, setOnboardingSeen] = useState(true);
   const [tab, setTab] = useState<(typeof tabs)[number]['key']>('home');
   const [apps, setApps] = useState<Application[]>([]);
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
@@ -34,6 +38,8 @@ export default function Index() {
   useEffect(() => {
     const boot = async () => {
       try {
+        const seen = await AsyncStorage.getItem(ONBOARDING_KEY);
+        setOnboardingSeen(seen === 'true');
         if (Platform.OS === 'web' && typeof window !== 'undefined' && window.location.hash.includes('session_id=')) {
           const id = new URLSearchParams(window.location.hash.replace('#', '')).get('session_id');
           if (id) { const res = await authApi.googleSession(id); await saveToken(res.token); setUser(res.user); window.history.replaceState({}, '', window.location.pathname); await loadData(); return; }
@@ -80,7 +86,13 @@ export default function Index() {
     try { await appApi.updateStatus(id, status); await loadData(); } catch (e: any) { setApps(previous); Alert.alert('Move failed', e.message); }
   }
 
-  if (checking) return <View style={styles.loading}><ActivityIndicator color="#0033CC" size="large" /><Text style={styles.loadingText}>Preparing JobTrackr AI</Text></View>;
+  async function finishOnboarding() {
+    await AsyncStorage.setItem(ONBOARDING_KEY, 'true');
+    setOnboardingSeen(true);
+  }
+
+  if (checking) return <View style={styles.loading}><ActivityIndicator color="#007AFF" size="large" /><Text style={styles.loadingText}>Preparing JobTrackr AI</Text></View>;
+  if (!onboardingSeen) return <OnboardingScreen onFinish={finishOnboarding} />;
   if (!user) return <AuthScreen onAuth={(u) => { setUser(u); loadData().catch(() => null); }} />;
 
   return (
@@ -98,7 +110,7 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#FFFFFF' }, screen: { flex: 1, backgroundColor: '#FFFFFF' }, loading: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF', gap: 14 }, loadingText: { color: '#09090B', fontWeight: '900' },
-  tabbar: { position: 'absolute', left: 16, right: 16, bottom: 18, minHeight: 72, borderRadius: 24, backgroundColor: '#09090B', flexDirection: 'row', padding: 8, shadowColor: '#000', shadowOpacity: .18, shadowRadius: 20, elevation: 8 },
-  tab: { flex: 1, borderRadius: 18, alignItems: 'center', justifyContent: 'center', gap: 4 }, tabActive: { backgroundColor: '#0033CC' }, tabText: { color: '#71717A', fontSize: 11, fontWeight: '900' }, tabTextActive: { color: '#FAFAFA' }, error: { position: 'absolute', bottom: 98, left: 20, right: 20, color: '#EF4444', fontWeight: '800' },
+  safe: { flex: 1, backgroundColor: '#050505' }, screen: { flex: 1, backgroundColor: '#050505' }, loading: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#050505', gap: 14 }, loadingText: { color: '#FFFFFF', fontWeight: '900' },
+  tabbar: { position: 'absolute', left: 16, right: 16, bottom: 18, minHeight: 72, borderRadius: 24, backgroundColor: 'rgba(17,17,17,.94)', borderWidth: 1, borderColor: '#27272A', flexDirection: 'row', padding: 8, shadowColor: '#007AFF', shadowOpacity: .22, shadowRadius: 22, elevation: 10 },
+  tab: { flex: 1, borderRadius: 18, alignItems: 'center', justifyContent: 'center', gap: 4 }, tabActive: { backgroundColor: '#007AFF', shadowColor: '#007AFF', shadowOpacity: .45, shadowRadius: 14 }, tabText: { color: '#71717A', fontSize: 11, fontWeight: '900' }, tabTextActive: { color: '#FFFFFF' }, error: { position: 'absolute', bottom: 98, left: 20, right: 20, color: '#EF4444', fontWeight: '800' },
 });

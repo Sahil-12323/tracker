@@ -124,7 +124,7 @@ def test_update_application_status_and_verify(api_client, auth_context):
 
 
 # Detection parsing and acceptance workflow
-def test_detection_parse_fallback_without_grok_key(api_client, auth_context):
+def test_detection_parse_with_ai_or_fallback(api_client, auth_context):
     response = api_client.post(
         f"{BASE_URL}/api/detections/parse",
         json={
@@ -139,8 +139,12 @@ def test_detection_parse_fallback_without_grok_key(api_client, auth_context):
     auth_context["created_detection"] = parsed["id"]
     assert parsed["source"] == "share"
     assert parsed["state"] == "pending"
-    assert parsed["ai_available"] is False
-    assert "fallback" in parsed["config_message"].lower() or "not configured" in parsed["config_message"].lower()
+    assert isinstance(parsed["ai_available"], bool)
+    assert parsed["config_message"]
+    if parsed["ai_available"] is False:
+        assert "fallback" in parsed["config_message"].lower() or "not configured" in parsed["config_message"].lower()
+    else:
+        assert "grok" in parsed["config_message"].lower()
 
 
 def test_accept_detection_creates_application(api_client, auth_context):
@@ -179,14 +183,14 @@ def test_analytics_endpoint_metrics_shape(api_client, auth_context):
     assert "Rejected" in data["by_status"]
 
 
-def test_gmail_config_reports_unconfigured_and_redirect_uri(api_client, auth_context):
+def test_gmail_config_reports_configured_and_redirect_uri(api_client, auth_context):
     response = api_client.get(f"{BASE_URL}/api/gmail/config", headers=auth_context["headers"], timeout=20)
     assert response.status_code == 200
     data = response.json()
-    assert data["configured"] is False
+    assert data["configured"] is True
     assert data["connected"] is False
     assert data["redirect_uri"].endswith("/api/gmail/callback")
-    assert "GOOGLE_CLIENT_ID" in data["message"]
+    assert "ready" in data["message"].lower()
 
 
 def test_cleanup_created_applications(api_client, auth_context):

@@ -4,7 +4,7 @@ import { Image, Platform, Pressable, ScrollView, StyleSheet, Text, View, useWind
 import { IMAGES } from '../constants/assets';
 import { Application, STATUSES, Status } from '../types';
 
-const statusColor: Record<Status, string> = { Applied: '#71717A', Screening: '#EAB308', Interview: '#3B82F6', Offer: '#22C55E', Rejected: '#EF4444' };
+const statusColor: Record<Status, string> = { Applied: '#A1A1AA', Screening: '#F5A623', Interview: '#007AFF', Offer: '#22C55E', Rejected: '#EF4444' };
 const webTest = (id: string) => (Platform.OS === 'web' ? ({ 'data-testid': id } as any) : {});
 
 export function KanbanBoard({ applications, onStatusChange, onOpenAdd }: { applications: Application[]; onStatusChange: (id: string, status: Status) => void; onOpenAdd: () => void }) {
@@ -55,11 +55,11 @@ function EmptyColumn() {
 
 const styles = StyleSheet.create({
   wrap: { flex: 1 }, hero: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 14, paddingBottom: 18 },
-  kicker: { color: '#3366FF', fontSize: 13, fontWeight: '900', letterSpacing: 1.8 }, title: { color: '#09090B', fontSize: 32, fontWeight: '900', letterSpacing: -1 },
-  add: { width: 54, height: 54, borderRadius: 18, backgroundColor: '#0033CC', alignItems: 'center', justifyContent: 'center' }, dragHint: { color: '#0033CC', fontWeight: '800', paddingHorizontal: 20, marginBottom: 8 },
-  columns: { gap: 14, paddingHorizontal: 20, paddingBottom: 120 }, column: { backgroundColor: '#F4F4F5', borderRadius: 24, padding: 14, borderWidth: 1, borderColor: '#E4E4E7' },
-  columnHeader: { minHeight: 48, flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 10 }, dot: { width: 10, height: 10, borderRadius: 99 }, columnTitle: { flex: 1, fontSize: 20, fontWeight: '900', color: '#09090B' }, count: { color: '#71717A', fontWeight: '900' },
-  card: { backgroundColor: '#FFFFFF', borderRadius: 18, borderWidth: 1, borderColor: '#E4E4E7', padding: 16, marginBottom: 12 }, cardActive: { borderColor: '#0033CC', borderWidth: 2, transform: [{ scale: .99 }] }, cardTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  company: { fontSize: 18, fontWeight: '900', color: '#09090B' }, role: { color: '#3F3F46', fontSize: 16, marginTop: 6 }, date: { color: '#71717A', marginTop: 12, fontWeight: '700' }, resume: { color: '#0033CC', marginTop: 8, fontWeight: '800' }, moveRow: { gap: 8, paddingTop: 14 },
-  movePill: { borderRadius: 999, backgroundColor: '#F4F4F5', paddingHorizontal: 12, paddingVertical: 9 }, moveText: { fontSize: 12, fontWeight: '900', color: '#3F3F46' }, empty: { alignItems: 'center', paddingVertical: 28 }, emptyImage: { width: 190, height: 128, borderRadius: 18 }, emptyText: { color: '#71717A', marginTop: 12, fontWeight: '800' },
+  kicker: { color: '#F5A623', fontSize: 13, fontWeight: '900', letterSpacing: 1.8 }, title: { color: '#FFFFFF', fontSize: 32, fontWeight: '900', letterSpacing: -1 },
+  add: { width: 54, height: 54, borderRadius: 18, backgroundColor: '#007AFF', alignItems: 'center', justifyContent: 'center', shadowColor: '#007AFF', shadowOpacity: .55, shadowRadius: 22, elevation: 10 }, dragHint: { color: '#3395FF', fontWeight: '800', paddingHorizontal: 20, marginBottom: 8 },
+  columns: { gap: 14, paddingHorizontal: 20, paddingBottom: 120 }, column: { backgroundColor: '#0A0A0A', borderRadius: 26, padding: 14, borderWidth: 1, borderColor: '#1F1F22', shadowColor: '#007AFF', shadowOpacity: .08, shadowRadius: 20 },
+  columnHeader: { minHeight: 48, flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 10 }, dot: { width: 10, height: 10, borderRadius: 99 }, columnTitle: { flex: 1, fontSize: 20, fontWeight: '900', color: '#FFFFFF' }, count: { color: '#A1A1AA', fontWeight: '900' },
+  card: { backgroundColor: '#111111', borderRadius: 20, borderWidth: 1, borderColor: '#27272A', padding: 16, marginBottom: 12, shadowColor: '#000', shadowOpacity: .3, shadowRadius: 18 }, cardActive: { borderColor: '#3395FF', borderWidth: 2, transform: [{ scale: .99 }] }, cardTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  company: { fontSize: 18, fontWeight: '900', color: '#FFFFFF' }, role: { color: '#D4D4D8', fontSize: 16, marginTop: 6 }, date: { color: '#A1A1AA', marginTop: 12, fontWeight: '700' }, resume: { color: '#3395FF', marginTop: 8, fontWeight: '800' }, moveRow: { gap: 8, paddingTop: 14 },
+  movePill: { borderRadius: 999, backgroundColor: 'rgba(255,255,255,.06)', borderWidth: 1, borderColor: '#27272A', paddingHorizontal: 12, paddingVertical: 9 }, moveText: { fontSize: 12, fontWeight: '900', color: '#D4D4D8' }, empty: { alignItems: 'center', paddingVertical: 28 }, emptyImage: { width: 190, height: 128, borderRadius: 18, opacity: .82 }, emptyText: { color: '#A1A1AA', marginTop: 12, fontWeight: '800' },
 });

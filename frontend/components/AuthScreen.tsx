@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   logo: { width: 72, height: 72, borderRadius: 18 }, kicker: { color: '#60A5FA', fontSize: 13, fontWeight: '800', letterSpacing: 2 },
   title: { color: '#FAFAFA', fontSize: 30, lineHeight: 36, fontWeight: '800', marginBottom: 10 },
   input: { backgroundColor: '#09090B', borderColor: '#27272A', borderWidth: 1, borderRadius: 12, color: '#FAFAFA', padding: 16, fontSize: 16 },
-  primary: { minHeight: 54, borderRadius: 12, backgroundColor: '#3366FF', alignItems: 'center', justifyContent: 'center', marginTop: 8 },
+  primary: { minHeight: 54, borderRadius: 14, backgroundColor: '#007AFF', alignItems: 'center', justifyContent: 'center', marginTop: 8, shadowColor: '#007AFF', shadowOpacity: .55, shadowRadius: 20, elevation: 8 },
   primaryText: { color: '#FAFAFA', fontSize: 16, fontWeight: '800' }, secondary: { minHeight: 54, borderRadius: 12, borderColor: '#3F3F46', borderWidth: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: 10 },
   secondaryText: { color: '#FAFAFA', fontSize: 15, fontWeight: '700' }, switcher: { alignItems: 'center', justifyContent: 'center', padding: 10, minHeight: 48 }, switchText: { color: '#A1A1AA', fontSize: 14 }, error: { color: '#F87171', fontWeight: '600' },
 });
