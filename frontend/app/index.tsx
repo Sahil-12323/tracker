@@ -16,8 +16,8 @@ import { Analytics, Application, ApplicationDraft, Status, User } from '../types
 
 Notifications.setNotificationHandler({ handleNotification: async () => ({ shouldShowAlert: true, shouldShowBanner: true, shouldShowList: true, shouldPlaySound: false, shouldSetBadge: false }) });
 const tabs = [
-  { key: 'home', label: 'Board', icon: 'grid-outline' },
-  { key: 'detect', label: 'Detect', icon: 'scan-outline' },
+  { key: 'home', label: 'Pipeline', icon: 'grid-outline' },
+  { key: 'detect', label: 'Auto-import', icon: 'scan-outline' },
   { key: 'analytics', label: 'Stats', icon: 'bar-chart-outline' },
   { key: 'profile', label: 'Profile', icon: 'person-outline' },
 ] as const;
@@ -98,7 +98,7 @@ export default function Index() {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.screen}>
-        {tab === 'home' && <KanbanBoard applications={apps} onStatusChange={updateStatus} onOpenAdd={() => { setInitialDraft(undefined); setSheet(true); }} />}
+        {tab === 'home' && <KanbanBoard applications={apps} onStatusChange={updateStatus} onOpenAdd={() => { setInitialDraft(undefined); setSheet(true); }} onOpenAutoImport={() => setTab('detect')} />}
         {tab === 'detect' && <DetectionScreen initialText={sharedText} onAccepted={(app) => { setApps((cur) => [app, ...cur]); setTab('home'); loadData().catch(() => null); }} onEdit={(draft) => { setInitialDraft(draft); setSheet(true); }} />}
         {tab === 'analytics' && <AnalyticsScreen analytics={analytics} />}
         {tab === 'profile' && <ProfileScreen user={user} onLogout={() => setUser(null)} onDetections={(items) => { if (items.length) setTab('detect'); }} />}
