@@ -28,12 +28,16 @@ export function DetectionScreen({ initialText, onAccepted, onEdit }: { initialTe
 
   async function accept() {
     if (!detection) return;
-    const app = await appApi.acceptDetection(detection.id); setDetection(null); onAccepted(app);
+    setLoading(true); setMessage('');
+    try {
+      const app = await appApi.acceptDetection(detection.id); setDetection(null); onAccepted(app);
+    } catch (e: any) { setMessage(e.message || 'Could not add detection.'); } finally { setLoading(false); }
   }
 
   async function ignore() {
     if (!detection) return;
-    await appApi.ignoreDetection(detection.id); setDetection(null);
+    setLoading(true); setMessage('');
+    try { await appApi.ignoreDetection(detection.id); setDetection(null); } catch (e: any) { setMessage(e.message || 'Could not ignore detection.'); } finally { setLoading(false); }
   }
 
   return (
