@@ -1,22 +1,60 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
+    "name": "JobTrackr AI",
+    "slug": "jobtrackr-ai",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "frontend",
+    "scheme": "jobtrackr",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.emergent.jobtrackrai",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Select job screenshots",
+        "NSCameraUsageDescription": "Capture job screenshots",
+        "NSUserNotificationsUsageDescription": "Send follow-up reminders"
+      }
     },
     "android": {
+      "package": "com.emergent.jobtrackrai",
+      "permissions": [
+        "READ_MEDIA_IMAGES",
+        "READ_EXTERNAL_STORAGE",
+        "POST_NOTIFICATIONS"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#000"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": false,
+          "data": [
+            {
+              "scheme": "jobtrackr"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        },
+        {
+          "action": "SEND",
+          "data": [
+            {
+              "mimeType": "text/plain"
+            }
+          ],
+          "category": [
+            "DEFAULT"
+          ]
+        }
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -25,6 +63,13 @@
     },
     "plugins": [
       "expo-router",
+      "expo-notifications",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Select job screenshots"
+        }
+      ],
       [
         "expo-splash-screen",
         {
