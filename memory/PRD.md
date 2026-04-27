@@ -51,10 +51,14 @@ Build a production-ready iOS and Android mobile app plus backend named **JobTrac
 - Added animated pipeline streak effect on the destination status card when a job is moved between stages.
 - Verified stage movement UI: moving a job to Interview updates counts, switches the selected section, and shows the colored streak animation on the Interview status card.
 
+## Implemented — 2026-04-27 Grok Key Retest
+- Updated backend Grok API key from the latest supplied value and retested detection parsing.
+- xAI still rejects the key as invalid, so detection continues to use fallback parsing safely.
+
 ## Current Known Constraints
 - Public Expo preview is currently unavailable due supervisor/ngrok tunnel startup failures; local UI and backend tests pass.
 - Gmail sync requires real `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `/app/backend/.env`.
-- Grok extraction requires a valid `GROK_API_KEY`; the latest supplied key is still rejected by xAI, so the app uses a privacy-safe rule parser and clearly reports that state.
+- Grok extraction requires a valid `GROK_API_KEY`; the latest supplied key is still rejected by xAI as invalid, so the app uses a privacy-safe rule parser and clearly reports that state.
 - Full native iOS share extension support may require a native extension; Android share intent and deep link capture are configured.
 
 ## Prioritized Backlog
