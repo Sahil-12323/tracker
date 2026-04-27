@@ -1,0 +1,171 @@
+{
+  "app_name": "JobTrackr AI",
+  "theme": "Swiss & High-Contrast",
+  "archetype": 4,
+  "description": "A minimalist, high-contrast mobile app designed for tracking job applications efficiently. Emphasizes data clarity, typography, and functional beauty with seamless AI integrations.",
+  "platform": "React Native (Expo) - iOS and Android",
+  "colors": {
+    "light": {
+      "background": "#FFFFFF",
+      "surface": "#F4F4F5",
+      "surface_elevated": "#FFFFFF",
+      "border": "#E4E4E7",
+      "text_primary": "#09090B",
+      "text_secondary": "#71717A",
+      "text_inverse": "#FAFAFA",
+      "primary": "#0033CC",
+      "primary_active": "#002299",
+      "status_applied": "#71717A",
+      "status_screening": "#EAB308",
+      "status_interview": "#3B82F6",
+      "status_offer": "#22C55E",
+      "status_rejected": "#EF4444"
+    },
+    "dark": {
+      "background": "#09090B",
+      "surface": "#18181B",
+      "surface_elevated": "#27272A",
+      "border": "#27272A",
+      "text_primary": "#FAFAFA",
+      "text_secondary": "#A1A1AA",
+      "text_inverse": "#09090B",
+      "primary": "#3366FF",
+      "primary_active": "#1A4CFF",
+      "status_applied": "#A1A1AA",
+      "status_screening": "#FACC15",
+      "status_interview": "#60A5FA",
+      "status_offer": "#4ADE80",
+      "status_rejected": "#F87171"
+    }
+  },
+  "typography": {
+    "font_family": {
+      "heading": "Outfit",
+      "body": "Manrope"
+    },
+    "sizes": {
+      "h1": { "fontSize": 32, "lineHeight": 38, "letterSpacing": -1.0, "fontWeight": "800" },
+      "h2": { "fontSize": 24, "lineHeight": 32, "letterSpacing": -0.5, "fontWeight": "700" },
+      "h3": { "fontSize": 20, "lineHeight": 28, "letterSpacing": -0.3, "fontWeight": "600" },
+      "body_large": { "fontSize": 18, "lineHeight": 26, "fontWeight": "500" },
+      "body": { "fontSize": 16, "lineHeight": 24, "fontWeight": "400" },
+      "caption": { "fontSize": 13, "lineHeight": 18, "letterSpacing": 0.2, "fontWeight": "500", "textTransform": "uppercase" }
+    }
+  },
+  "spacing": {
+    "xs": 4,
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 24,
+    "2xl": 32,
+    "3xl": 48,
+    "safe_area_margin": 16
+  },
+  "border_radius": {
+    "none": 0,
+    "sm": 4,
+    "md": 8,
+    "lg": 16,
+    "xl": 24,
+    "pill": 9999
+  },
+  "ui_components": {
+    "buttons": {
+      "primary": {
+        "backgroundColor": "primary",
+        "borderRadius": "md",
+        "paddingVertical": "lg",
+        "paddingHorizontal": "xl",
+        "alignItems": "center",
+        "justifyContent": "center"
+      },
+      "secondary": {
+        "backgroundColor": "transparent",
+        "borderWidth": 1,
+        "borderColor": "border",
+        "borderRadius": "md",
+        "paddingVertical": "lg",
+        "paddingHorizontal": "xl",
+        "alignItems": "center"
+      }
+    },
+    "inputs": {
+      "text": {
+        "borderWidth": 1,
+        "borderColor": "border",
+        "borderRadius": "md",
+        "padding": "lg",
+        "fontSize": 16,
+        "backgroundColor": "surface",
+        "color": "text_primary"
+      }
+    },
+    "cards": {
+      "job_card": {
+        "backgroundColor": "surface_elevated",
+        "borderWidth": 1,
+        "borderColor": "border",
+        "borderRadius": "lg",
+        "padding": "lg",
+        "marginBottom": "md",
+        "shadowOpacity": 0
+      }
+    },
+    "modals": {
+      "bottom_sheet": {
+        "borderTopLeftRadius": "xl",
+        "borderTopRightRadius": "xl",
+        "backgroundColor": "surface_elevated",
+        "padding": "xl",
+        "shadowColor": "#000",
+        "shadowOpacity": 0.1,
+        "shadowRadius": 20,
+        "elevation": 10
+      }
+    }
+  },
+  "ux_patterns": {
+    "navigation": "Bottom Tab Navigation with 4 tabs: Home (Kanban), Add, Analytics, Profile. Use a persistent floating action button (FAB) for quick add actions if preferred.",
+    "kanban_board": "On mobile, use a horizontal paging scroll view where each page represents a column (Applied, Interview, etc.). Inside each column, use a vertical list for cards. Use a 'long-press to drag' interaction pattern, or simply tap a card to open an edit modal to change its status easily.",
+    "smart_detection_popup": "Use a smooth bottom sheet (gorhom/bottom-sheet) that slides up automatically when the app detects an intent share, parsed email, or newly analyzed screenshot. Show the 'ai_detection_graphic' image at the top of the sheet, present extracted data in a read-only minimalist list, and provide large ✅ Add / ❌ Ignore buttons.",
+    "animations": "Minimalist and snappy. Use layout animations (Reanimated) for list reordering. Apply subtle opacity fades (0ms-200ms) for modal entrances.",
+    "accessibility": "Ensure all form inputs have accessible labels. Use 'data-testid' on ALL interactive elements (e.g., 'data-testid=\"job-card\"', 'data-testid=\"add-application-button\"'). Respect device dynamic type and dark mode preferences."
+  },
+  "media_urls": {
+    "app_logo": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/305e4664-35c6-4b11-82e9-683d2dba5960/images/7fed45bfe3dbd9eec0f4e300479559cd3867ae358e42dc839e73703b7a95ccc1.png",
+      "description": "Minimalist geometric logo of a target and briefcase, perfect for the splash screen and header."
+    },
+    "auth_background": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/305e4664-35c6-4b11-82e9-683d2dba5960/images/b4b3503f517bf973b3be7e19740f2ba7cffae98cf3d728dde88193f2b4e0d321.png",
+      "description": "Abstract elegant geometric pattern for the login/signup screen background."
+    },
+    "empty_state_jobs": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/305e4664-35c6-4b11-82e9-683d2dba5960/images/8121a8588aa4a9fd9a996dabd3de91ab93ca7db827e3232f360126d1bee413dd.png",
+      "description": "3D minimalist rendering of an empty desk with a folder. Use in the Kanban board when a column is empty."
+    },
+    "ai_detection_graphic": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/305e4664-35c6-4b11-82e9-683d2dba5960/images/2973f41464a19b2b21a7d29372b08e393ed52440b81dc1f996c41c136279258f.png",
+      "description": "Abstract glowing blue laser scanning data blocks. Use in the Smart Detection Popup/Bottom Sheet."
+    },
+    "default_company_logo": {
+      "url": "https://images.unsplash.com/photo-1553601581-8a1f1010efbe?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBvZmZpY2UlMjBidWlsZGluZyUyMGdsYXNzJTIwZmFjYWRlfGVufDB8fHx8MTc3NzI5NTcxN3ww&ixlib=rb-4.1.0&q=85",
+      "description": "Default placeholder for company logos when the exact logo is unavailable."
+    },
+    "default_user_avatar": {
+      "url": "https://images.unsplash.com/photo-1762522926157-bcc04bf0b10a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzN8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBtb2Rlcm4lMjBoZWFkc2hvdCUyMHBvcnRyYWl0JTIwc21pbGluZ3xlbnwwfHx8fDE3NzcyOTU3MTd8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Default placeholder for the user profile avatar."
+    }
+  },
+  "testing_attributes": {
+    "rule": "All interactive elements must include a 'data-testid' attribute.",
+    "examples": [
+      "data-testid=\"kanban-column-applied\"",
+      "data-testid=\"job-card-{id}\"",
+      "data-testid=\"add-manual-button\"",
+      "data-testid=\"smart-detection-accept\"",
+      "data-testid=\"email-login-button\""
+    ]
+  }
+}
